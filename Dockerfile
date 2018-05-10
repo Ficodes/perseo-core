@@ -18,9 +18,11 @@
 
 FROM centos:centos7.4.1708
 
+
 ENV MVN_VER "3.5.2"
 ENV JAVA_VERSION "1.8.0"
 ENV TOMCAT_VERSION "8.5.27"
+
 ENV CATALINA_HOME "/opt/tomcat"
 ENV PERSEO_FE_URL=perseo_fe_endpoint
 
