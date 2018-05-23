@@ -5,7 +5,12 @@ jdk:
  - oraclejdk7
  - openjdk8
  - oraclejdk8
- 
+
+branches:
+  only:
+    - master
+    - update/dependencies
+
 install:
  - mvn test -B
 
