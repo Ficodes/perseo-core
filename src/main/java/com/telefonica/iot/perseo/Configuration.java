@@ -64,11 +64,11 @@ public final class Configuration {
             PROPERTIES.load(stream);
             stream.close();
         } catch (IOException e) {
-            LOGGER.error("reload: " + e.getMessage());
-            return false;
+            LOGGER.warn("reload: " + e.getMessage());
         }
 
         actionRule = PROPERTIES.getProperty(ACTION_URL_PROP, System.getenv("PERSEO_FE_URL")) + "/actions/do";
+        LOGGER.debug("actionRule: " + actionRule);
         //Check maxAge numerical value
         try {
             maxAge = Long.parseLong(PROPERTIES.getProperty(MAX_AGE_PROP, System.getenv("MAX_AGE")));
