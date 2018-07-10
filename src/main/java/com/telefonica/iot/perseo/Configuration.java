@@ -68,14 +68,16 @@ public final class Configuration {
         }
 
         actionRule = PROPERTIES.getProperty(ACTION_URL_PROP, System.getenv("PERSEO_FE_URL")) + "/actions/do";
-        LOGGER.debug("actionRule: " + actionRule);
         //Check maxAge numerical value
+        String max_age_prop = PROPERTIES.getProperty(MAX_AGE_PROP, System.getenv("MAX_AGE"));
+
         try {
-            maxAge = Long.parseLong(PROPERTIES.getProperty(MAX_AGE_PROP, System.getenv("MAX_AGE")));
+            maxAge = Long.parseLong(max_age_prop);
         } catch (NumberFormatException nfe) {
-            LOGGER.error("Invalid configuration value for " + MAX_AGE_PROP + ": " + nfe);
             maxAge = DEFAULT_MAX_AGE_PROP;
-            return false;
+            if (max_age_prop != null && max_age_prop != "") {
+                LOGGER.error("Invalid configuration value for " + MAX_AGE_PROP + ": " + nfe);
+            }
         }
 
         return true;
