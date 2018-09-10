@@ -24,3 +24,4 @@ nbactions.xml
 .settings/org.eclipse.core.resources.prefs
 .project
 .classpath
+.DS_Store

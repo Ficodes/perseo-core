@@ -1,0 +1,16 @@
+language: java
+
+jdk:
+ - openjdk8
+ - oraclejdk8
+
+branches:
+  only:
+    - master
+    - update/dependencies
+
+install:
+ - mvn test -B
+
+before_install:
+ - mvn clean

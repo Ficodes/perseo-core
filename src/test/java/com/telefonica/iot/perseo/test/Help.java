@@ -145,16 +145,17 @@ public class Help {
      * @return String representing the JSON for the rule set
      */
     public static String longRuleSet() {
-        final int ruleNumber = 100000; // ~45MB
+        final int ruleNumber = 50000; // ~45MB
         JSONArray ja = new JSONArray();
-        JSONObject rule = new JSONObject();
+        JSONObject rule1 = new JSONObject();
+        rule1.put("name", "manyrules_a");
+        rule1.put("text", ExampleRules[0]);
+        JSONObject rule2 = new JSONObject();
+        rule2.put("name", "manyrules_b");
+        rule2.put("text", ExampleRules[1]);
         for (int i = 0; i < ruleNumber; i++) {
-            rule.put("name", "manyrules_a_" + i);
-            rule.put("text", ExampleRules[0]);
-            ja.put(rule);
-            rule.put("name", "manyrules_b_" + i);
-            rule.put("text", ExampleRules[1]);
-            ja.put(rule);
+            ja.put(rule1);
+            ja.put(rule2);
         }
         return ja.toString();
     }

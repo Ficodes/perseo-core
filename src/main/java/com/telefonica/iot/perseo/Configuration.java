@@ -41,7 +41,7 @@ public final class Configuration {
     private static final String PATH = "/etc/perseo-core.properties";
     private static final String ACTION_URL_PROP = "action.url";
     private static final String MAX_AGE_PROP = "rule.max_age";
-    private static final long DEFAULT_MAX_AGE_PROP = 30000;
+    private static final long DEFAULT_MAX_AGE_PROP = 60000;
     private static final Properties PROPERTIES = new Properties();
     private static String actionRule;
     private static long maxAge = DEFAULT_MAX_AGE_PROP;
@@ -57,23 +57,29 @@ public final class Configuration {
      */
     public static synchronized boolean reload() {
         LOGGER.info("Configuration is being reloaded");
+        PROPERTIES.clear();
         InputStream stream;
         try {
             stream = new FileInputStream(PATH);
             PROPERTIES.load(stream);
             stream.close();
-            actionRule = PROPERTIES.getProperty(ACTION_URL_PROP);
-            //Check maxAge numerical value
-            try {
-                maxAge = Long.parseLong(PROPERTIES.getProperty(MAX_AGE_PROP));
-            } catch (NumberFormatException nfe) {
-                LOGGER.error("Invalid configuration value for " + MAX_AGE_PROP + ": " + nfe);
-                return false;
-            }
         } catch (IOException e) {
-            LOGGER.error("reload: " + e.getMessage());
-            return false;
+            LOGGER.warn("reload: " + e.getMessage());
         }
+
+        actionRule = PROPERTIES.getProperty(ACTION_URL_PROP, System.getenv("PERSEO_FE_URL")) + "/actions/do";
+        //Check maxAge numerical value
+        String max_age_prop = PROPERTIES.getProperty(MAX_AGE_PROP, System.getenv("MAX_AGE"));
+
+        try {
+            maxAge = Long.parseLong(max_age_prop);
+        } catch (NumberFormatException nfe) {
+            maxAge = DEFAULT_MAX_AGE_PROP;
+            if (max_age_prop != null && max_age_prop != "") {
+                LOGGER.error("Invalid configuration value for " + MAX_AGE_PROP + ": " + nfe);
+            }
+        }
+
         return true;
     }
 
