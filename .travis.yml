@@ -6,8 +6,7 @@ jdk:
 
 branches:
   only:
-    - master
-    - update/dependencies
+  - /.*/
 
 install:
  - mvn test -B
