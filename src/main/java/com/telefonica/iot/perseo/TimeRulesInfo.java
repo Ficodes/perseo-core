@@ -1,3 +1,22 @@
+/**
+ * Copyright 2018 Future Internet Consulting and Development Solutions (FICODES)
+ *
+ * This file is part of perseo-core project.
+ *
+ * perseo-core is free software: you can redistribute it and/or modify it under the terms of the GNU
+ * General Public License version 2 as published by the Free Software Foundation.
+ *
+ * perseo-core is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+ * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+ * for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with perseo-core. If not, see
+ * http://www.gnu.org/licenses/.
+ *
+ * For those usages not covered by the GNU General Public License please contact with
+ * iot_support at tid dot es
+ */
+
 package com.telefonica.iot.perseo;
 
 import org.json.JSONArray;
@@ -11,6 +30,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ *
+ * @author cblanco
+ */
 public final class TimeRulesInfo {
 
     private static TimeRulesInfo INSTANCE;
@@ -28,6 +51,12 @@ public final class TimeRulesInfo {
         return INSTANCE;
     }
 
+    /**
+     * Save 'timed rules' name, service and subservice for later use of this information when
+     * the timed events are launched from GenericListener
+     *
+     * @param body POST or PUT body with rules data
+     */
     public void saveTimeRules(String body) {
 
         if (body.equals("")) {
@@ -36,9 +65,10 @@ public final class TimeRulesInfo {
 
             JSONArray jo;
             try {
-                // For updateAll requests
+                // For updateAll requests from perseo-fe
                 jo = new JSONArray(body);
             } catch (JSONException e) {
+                // For new Rules requests from perseo-fe
                 jo = new JSONArray();
                 jo.put(new JSONObject(body));
             }
@@ -50,10 +80,10 @@ public final class TimeRulesInfo {
 
                 // Only "Timer Rules"
                 if (!strName.startsWith("ctxt$") && isTimeRule(ruleText)) {
-                    // Curent active rule. save all headers by name
+
+                    // Current active rule. Save header information by name
                     List<String> ruleName = new ArrayList(Arrays.asList(strName.split("@")));
                     List<String> context = new ArrayList(Arrays.asList(ruleName.get(1).split("/")));
-
                     jo.getJSONObject(i).put("service", context.get(0));
                     context.remove(0);
                     jo.getJSONObject(i).put("subservice", "/" + String.join("/", context));
@@ -63,6 +93,12 @@ public final class TimeRulesInfo {
         }
     }
 
+    /**
+     * Check if a ruleText is a 'timed rule'
+     *
+     * @param ruleText The rule text
+     * @return true if ruleText is a 'timed rule', false otherwise
+     */
     private boolean isTimeRule(String ruleText) {
         // Detect Timer rules, searching "timer:XX" patterns or Match_Recognize interval patterns
         // http://esper.espertech.com/release-5.1.0/esper-reference/html/match-recognize.html#match-recognize-interval
@@ -73,10 +109,21 @@ public final class TimeRulesInfo {
                 (ruleText.toLowerCase().contains(" match_recognize") && ruleText.toLowerCase().contains("interval"));
     }
 
+    /**
+     * Return all 'timed rules' information saved
+     *
+     * @return All rules information by name
+     */
     public HashMap<String, JSONObject> getAllRulesInfo() {
         return rulesInfo;
     }
 
+    /**
+     * Get a specific 'timed rule' information
+     *
+     * @param ruleName The rule name. Can include optionally '@context...' in the name
+     * @return The rule information
+     */
     public JSONObject getRuleInfo(String ruleName) {
 
         if (ruleName == null) {
@@ -85,12 +132,21 @@ public final class TimeRulesInfo {
         return rulesInfo.get(ruleName.split("@")[0]);
     }
 
+    /**
+     * Delete the information relative to specific 'timed rule'
+     *
+     * @param ruleName The rule name. Can include optionally '@context...' in the name
+     */
     public void removeTimeRule(String ruleName) {
         if (ruleName != null) {
             rulesInfo.remove(ruleName.split("@")[0]);
         }
     }
 
+    /**
+     * Delete all the 'timed rules' information
+     *
+     */
     public void cleanAllRules() {
         rulesInfo = new HashMap<String, JSONObject>();
     }
