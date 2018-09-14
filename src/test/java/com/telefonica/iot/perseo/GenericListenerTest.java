@@ -30,9 +30,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import javax.servlet.http.HttpServletRequest;
-
-import static org.mockito.Mockito.mock;
 
 /**
  *
@@ -92,7 +89,6 @@ public class GenericListenerTest {
                 "from pattern [every timer:interval(30 sec)]";
         body.put("name", ruleName);
         body.put("text", ruleText);
-        HttpServletRequest request = mock(HttpServletRequest.class);
         tRInfoInstance.saveTimeRules(body.toString());
 
         // call update with a testrule

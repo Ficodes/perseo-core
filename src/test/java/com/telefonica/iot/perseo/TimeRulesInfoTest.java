@@ -27,9 +27,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -79,7 +77,6 @@ public class TimeRulesInfoTest {
     public void testAddRules() {
 
         // save 2 timer rules
-        HttpServletRequest request = mock(HttpServletRequest.class);
         JSONObject body = new JSONObject();
         String ruleName = "timer_test_rule1@ttestservice1/test/timerRule1";
         String ruleText = "context ctxt$ttestservice1$test$timerRule1 select \"timer_test_rule1\" as ruleName, *, current_timestamp() as currentTS from pattern [every timer:interval(30 sec)]";
@@ -117,7 +114,6 @@ public class TimeRulesInfoTest {
     public void testRemoveRule() {
 
         // save 2 timer rules
-        HttpServletRequest request = mock(HttpServletRequest.class);
         JSONObject body = new JSONObject();
         String ruleName = "timer_test_rule1@ttestservice1/test/timerRule1";
         String ruleText = "context ctxt$ttestservice1$test$timerRule1 select \"timer_test_rule1\" as ruleName, *, current_timestamp() as currentTS from pattern [every timer:interval(30 sec)]";
@@ -156,7 +152,6 @@ public class TimeRulesInfoTest {
     public void testCleanAllRules() {
 
         // save 2 timer rules
-        HttpServletRequest request = mock(HttpServletRequest.class);
         JSONObject body = new JSONObject();
         String ruleName = "timer_test_rule1@ttestservice1/test/timerRule1";
         String ruleText = "context ctxt$ttestservice1$test$timerRule1 select \"timer_test_rule1\" as ruleName, *, current_timestamp() as currentTS from pattern [every timer:interval(30 sec)]";
