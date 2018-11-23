@@ -15,6 +15,8 @@
 *
 * For those usages not covered by the GNU General Public License please contact with
 * iot_support at tid dot es
+*
+* Modified by: Carlos Blanco - Future Internet Consulting and Development Solutions (FICODES)
 */
 package com.telefonica.iot.perseo;
 
@@ -219,7 +221,6 @@ public class Utils {
      * Capture correlator and generate
      *
      * @param req HttpServletRequest incomming request
-     *
      */
     public static void putCorrelatorAndTrans(HttpServletRequest req) {
         String correlatorId = req.getHeader(Constants.CORRELATOR_HEADER);
@@ -291,12 +292,28 @@ public class Utils {
         }
         MDC.put(Constants.SERVICE_FIELD, service);
 
-        String subservice =  (String) rule.get("subservice");
+        String subservice = (String) rule.get("subservice");
         if (subservice == null) {
             subservice = "?";
         }
         MDC.put(Constants.SUBSERVICE_FIELD, subservice);
 
         MDC.put(Constants.REALIP_FIELD, "Perseo-core-timer-rule");
+    }
+
+    /**
+     * Validate an URL
+     *
+     * @param url The url to validate
+     * @return True if the url is valid false if is not
+     *
+     */
+    public static Boolean isValidURL(String url) {
+        try {
+            new URL(url);
+            return true;
+        } catch (MalformedURLException e) {
+            return false;
+        }
     }
 }

@@ -15,6 +15,8 @@
 *
 * For those usages not covered by the GNU General Public License please contact with
 * iot_support at tid dot es
+*
+* Modified by: Carlos Blanco - Future Internet Consulting and Development Solutions (FICODES)
 */
 
 package com.telefonica.iot.perseo;
@@ -75,13 +77,13 @@ public class GenericListenerTest {
     }
 
     /**
-     * Test update method with timer rule.
+     * Test update method with timed rule.
      */
     @Test
     public void testUpdateTimerRule() {
-        System.out.println("update with timer rule");
-        // Add RuleTest in TimeRulesInfo Singleton
-        TimeRulesInfo tRInfoInstance = TimeRulesInfo.getInstance();
+        System.out.println("update with timed rule");
+        // Add RuleTest in TimeRulesStore Singleton
+        TimeRulesStore tRInfoInstance = TimeRulesStore.getInstance();
         tRInfoInstance.cleanAllRules();
         JSONObject body = new JSONObject();
         String ruleName = "testrule@test/timerscope";

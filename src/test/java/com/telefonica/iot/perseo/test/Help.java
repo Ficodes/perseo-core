@@ -145,7 +145,7 @@ public class Help {
      * @return String representing the JSON for the rule set
      */
     public static String longRuleSet() {
-        final int ruleNumber = 50000; // ~45MB
+        final int ruleNumber = 100000; // ~45MB
         JSONArray ja = new JSONArray();
         JSONObject rule1 = new JSONObject();
         rule1.put("name", "manyrules_a");

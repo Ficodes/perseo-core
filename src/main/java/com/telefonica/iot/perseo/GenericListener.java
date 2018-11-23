@@ -15,6 +15,8 @@
 *
 * For those usages not covered by the GNU General Public License please contact with
 * iot_support at tid dot es
+*
+* Modified by: Carlos Blanco - Future Internet Consulting and Development Solutions (FICODES)
 */
 
 package com.telefonica.iot.perseo;
@@ -48,17 +50,16 @@ public class GenericListener implements UpdateListener {
     @Override
     public void update(EventBean[] newEvents, EventBean[] oldEvents) {
         try {
-            HashMap<String, JSONObject> rules = TimeRulesInfo.getInstance().getAllRulesInfo();
+            HashMap<String, JSONObject> rules = TimeRulesStore.getInstance().getAllRulesInfo();
             for (EventBean event : newEvents) {
 
                 JSONObject jo = Utils.Event2JSONObject(event);
                 Map<String, Object> eventMap = Utils.JSONObject2Map(jo);
 
-                // Get Rule Information from TimeRulesInfo
-                JSONObject rule = TimeRulesInfo.getInstance().getRuleInfo((String) eventMap.get("ruleName"));
+                // Get Rule Information from TimeRulesStore
+                JSONObject rule = TimeRulesStore.getInstance().getRuleInfo((String) eventMap.get("ruleName"));
 
-                // Note. Is posible improving this method using the not documented Esper eventType.
-                // if event.getEventType().getName().endsWith("_wrapoutwild_") -> Timer rule?
+                // Alt. if event.getEventType().getName().endsWith("_wrapoutwild_") -> Timed rule?
                 if (rule != null) {
 
                     // Is a timed Rule. Set special headers using rule saved information

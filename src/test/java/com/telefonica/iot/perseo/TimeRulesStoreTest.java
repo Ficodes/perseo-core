@@ -1,21 +1,23 @@
 /**
- * Copyright 2015 Telefonica Investigación y Desarrollo, S.A.U
- *
- * This file is part of perseo-core project.
- *
- * perseo-core is free software: you can redistribute it and/or modify it under the terms of the GNU
- * General Public License version 2 as published by the Free Software Foundation.
- *
- * perseo-core is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
- * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
- * for more details.
- *
- * You should have received a copy of the GNU General Public License along with perseo-core. If not, see
- * http://www.gnu.org/licenses/.
- *
- * For those usages not covered by the GNU General Public License please contact with
- * iot_support at tid dot es
- */
+* Copyright 2015 Telefonica Investigación y Desarrollo, S.A.U
+*
+* This file is part of perseo-core project.
+*
+* perseo-core is free software: you can redistribute it and/or modify it under the terms of the GNU
+* General Public License version 2 as published by the Free Software Foundation.
+*
+* perseo-core is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+* for more details.
+*
+* You should have received a copy of the GNU General Public License along with perseo-core. If not, see
+* http://www.gnu.org/licenses/.
+*
+* For those usages not covered by the GNU General Public License please contact with
+* iot_support at tid dot es
+*
+* Created by: Carlos Blanco - Future Internet Consulting and Development Solutions (FICODES)
+*/
 
 package com.telefonica.iot.perseo;
 
@@ -31,13 +33,13 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author brox
+ * @author cblanco
  */
-public class TimeRulesInfoTest {
+public class TimeRulesStoreTest {
 
-    private TimeRulesInfo instance = TimeRulesInfo.getInstance();
+    private TimeRulesStore instance = TimeRulesStore.getInstance();
 
-    public TimeRulesInfoTest() {
+    public TimeRulesStoreTest() {
     }
 
     @BeforeClass
@@ -76,7 +78,7 @@ public class TimeRulesInfoTest {
     @Test
     public void testAddRules() {
 
-        // save 2 timer rules
+        // save 2 timed rules
         JSONObject body = new JSONObject();
         String ruleName = "timer_test_rule1@ttestservice1/test/timerRule1";
         String ruleText = "context ctxt$ttestservice1$test$timerRule1 select \"timer_test_rule1\" as ruleName, *, current_timestamp() as currentTS from pattern [every timer:interval(30 sec)]";
@@ -113,7 +115,7 @@ public class TimeRulesInfoTest {
     @Test
     public void testRemoveRule() {
 
-        // save 2 timer rules
+        // save 2 timed rules
         JSONObject body = new JSONObject();
         String ruleName = "timer_test_rule1@ttestservice1/test/timerRule1";
         String ruleText = "context ctxt$ttestservice1$test$timerRule1 select \"timer_test_rule1\" as ruleName, *, current_timestamp() as currentTS from pattern [every timer:interval(30 sec)]";
@@ -151,7 +153,7 @@ public class TimeRulesInfoTest {
     @Test
     public void testCleanAllRules() {
 
-        // save 2 timer rules
+        // save 2 timed rules
         JSONObject body = new JSONObject();
         String ruleName = "timer_test_rule1@ttestservice1/test/timerRule1";
         String ruleText = "context ctxt$ttestservice1$test$timerRule1 select \"timer_test_rule1\" as ruleName, *, current_timestamp() as currentTS from pattern [every timer:interval(30 sec)]";
